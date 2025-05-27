@@ -28,17 +28,21 @@ main(int argc,
      char **argv)
 {
     XfconfChannel *channel;
-    
-    if(!xfconf_tests_start())
+    gchar *str;
+
+    if (!xfconf_tests_start()) {
         return 1;
-    
+    }
+
     channel = xfconf_channel_new(TEST_CHANNEL_NAME);
-    
-    TEST_OPERATION(!strcmp(xfconf_channel_get_string(channel, test_string_property, ""), test_string));
-    
+
+    str = xfconf_channel_get_string(channel, test_string_property, "");
+    TEST_OPERATION(!strcmp(str, test_string));
+    g_free(str);
+
     g_object_unref(G_OBJECT(channel));
-    
+
     xfconf_tests_end();
-    
+
     return 0;
 }

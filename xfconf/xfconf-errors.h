@@ -21,14 +21,14 @@
 #ifndef __XFCONF_ERRORS_H__
 #define __XFCONF_ERRORS_H__
 
-#if !defined(LIBXFCONF_COMPILATION) && !defined(XFCONF_IN_XFCONF_H)
+#if !defined(LIBXFCONF_COMPILATION) && !defined(__XFCONF_IN_XFCONF_H__)
 #error "Do not include xfconf-errors.h, as this file may change or disappear in the future.  Include <xfconf/xfconf.h> instead."
 #endif
 
 #include <glib-object.h>
 
-#define XFCONF_TYPE_ERROR  (xfconf_error_get_type())
-#define XFCONF_ERROR       (xfconf_get_error_quark())
+#define XFCONF_TYPE_ERROR (xfconf_error_get_type())
+#define XFCONF_ERROR (xfconf_get_error_quark())
 
 G_BEGIN_DECLS
 
@@ -48,7 +48,7 @@ G_BEGIN_DECLS
  * An enumeration listing the different kinds of errors under the XFCONF_ERROR domain.
  *
  **/
-typedef enum
+typedef enum _XfconfError
 {
     XFCONF_ERROR_UNKNOWN = 0,
     XFCONF_ERROR_CHANNEL_NOT_FOUND,
@@ -67,4 +67,4 @@ GQuark xfconf_get_error_quark(void);
 
 G_END_DECLS
 
-#endif  /* __XFCONF_ERRORS_H__ */
+#endif /* __XFCONF_ERRORS_H__ */

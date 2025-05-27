@@ -1,3 +1,100 @@
+xfconf (4.20.0-1) unstable; urgency=medium
+
+  * New upstream version 4.20.0
+  * Upload to unstable
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Wed, 18 Dec 2024 20:34:10 +0100
+
+xfconf (4.19.5-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Mateusz Łukasik ]
+  * New upstream version 4.19.4.
+  * Install xfconfd.service to xfconf.
+  * Update Standards-Version to 4.7.0.
+
+  [ Unit 193 ]
+  * New upstream version 4.19.5.
+  * d/control:
+    - Refresh introspection packaging.
+    - Replace depends, pkg-config → pkgconf.
+
+ -- Unit 193 <unit193@debian.org>  Mon, 02 Dec 2024 02:33:36 -0500
+
+xfconf (4.19.2-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.19.2.
+
+ -- Unit 193 <unit193@debian.org>  Mon, 18 Mar 2024 02:42:07 -0400
+
+xfconf (4.19.1-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.19.1.
+
+ -- Unit 193 <unit193@debian.org>  Thu, 09 Nov 2023 20:56:26 -0500
+
+xfconf (4.19.0-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.19.0.
+  * d/control, d/rules, d/xfconf-gsettings-backend.install:
+    - Enable and install the GSettings backend into xfconf-gsettings-backend.
+  * d/55xfconf, d/control, d/xfconf-gsettings-backend.install:
+    - Set the xfconf backend as default if installed.
+  * d/control:
+    - Replace intltool with gettext.
+    - Bump version constraint on xfce4-dev-tools to 4.19.
+    - Have xfconf suggest xfconf-gsettings-backend.
+  * d/libxfconf-0-dev.docs: Drop, TODO file removed upstream.
+
+ -- Unit 193 <unit193@debian.org>  Thu, 17 Aug 2023 23:59:45 -0400
+
+xfconf (4.18.1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.18.1.
+  * Update Standards-Version to 4.6.2.
+
+ -- Unit 193 <unit193@debian.org>  Tue, 13 Jun 2023 02:24:48 -0400
+
+xfconf (4.18.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * d/rules: Explicitly disable vala. (Closes: #1031968)
+
+ -- Unit 193 <unit193@debian.org>  Mon, 27 Feb 2023 00:54:48 -0500
+
+xfconf (4.18.0-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.18.0.
+  * d/*.docs,d/rules: Opt-out of trimmed changelogs, install NEWS as changelog.
+
+ -- Unit 193 <unit193@debian.org>  Thu, 15 Dec 2022 05:51:50 -0500
+
+xfconf (4.17.2-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster (oldstable)
+  * Update standards version to 4.6.1, no changes needed.
+  * Avoid explicitly specifying -Wl,--as-needed linker flag.
+
+  [ Unit 193 ]
+  * New upstream version 4.17.2.
+  * d/control:
+    - Bump B-D on libxfce4util-dev to 4.17.3.
+    - Mark gir1.2-xfconf-0 M-A: same.
+    - Drop B-D on libextutils-(depends,pkgconfig)-perl, libglib-perl.
+    - Bump DH compat to 13.
+  * d/rules: Use execute_after_auto_install for removing .la files.
+
+ -- Unit 193 <unit193@debian.org>  Sat, 10 Dec 2022 02:50:03 -0500
+
 xfconf (4.16.0-2) unstable; urgency=medium
 
   * d/control: version xfce4-dev-tool build-dep to 4.16

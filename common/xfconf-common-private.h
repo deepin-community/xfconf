@@ -21,6 +21,11 @@
 #ifndef __XFCONF_COMMON_PRIVATE_H__
 #define __XFCONF_COMMON_PRIVATE_H__
 
-#define I_(string) (g_intern_static_string((string)))
+#include <glib.h>
 
-#endif  /* __XFCONF_COMMON_PRIVATE_H__ */
+enum _XfconfError;
+
+gboolean _xfconf_error_from_dbus_error_name(const gchar *error_name,
+                                            enum _XfconfError *xfconf_error);
+
+#endif /* __XFCONF_COMMON_PRIVATE_H__ */

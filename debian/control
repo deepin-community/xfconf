@@ -3,18 +3,17 @@ Section: xfce
 Priority: optional
 Maintainer: Debian Xfce Maintainers <debian-xfce@lists.debian.org>
 Uploaders: Yves-Alexis Perez <corsac@debian.org>
-Build-Depends: debhelper-compat (= 12),
+Build-Depends: debhelper-compat (= 13),
+               gettext,
+               gir1.2-gobject-2.0-dev,
+               gir1.2-gio-2.0-dev,
                gobject-introspection,
                gtk-doc-tools,
-               intltool,
-               libextutils-depends-perl,
-               libextutils-pkgconfig-perl,
                libgirepository1.0-dev,
-               libglib-perl,
-               libxfce4util-dev (>= 4.10.0),
-               xfce4-dev-tools (>= 4.16)
+               libxfce4util-dev (>= 4.17.3),
+               xfce4-dev-tools (>= 4.19)
 Rules-Requires-Root: no
-Standards-Version: 4.5.1
+Standards-Version: 4.7.0
 Homepage: https://docs.xfce.org/xfce/xfconf/start
 Vcs-Git: https://salsa.debian.org/xfce-team/desktop/xfconf.git
 Vcs-Browser: https://salsa.debian.org/xfce-team/desktop/xfconf
@@ -22,12 +21,14 @@ Vcs-Browser: https://salsa.debian.org/xfce-team/desktop/xfconf
 Package: libxfconf-0-dev
 Section: libdevel
 Architecture: any
+Multi-Arch: same
 Depends: gir1.2-xfconf-0 (= ${binary:Version}),
          libglib2.0-dev,
          libxfconf-0-3 (= ${binary:Version}),
-         pkg-config,
-         ${misc:Depends}
-Multi-Arch: same
+         pkgconf,
+         ${misc:Depends},
+         ${gir:Depends}
+Provides: ${gir:Provides}
 Description: Development files for libxfconf
  This package contains the development files libxfconf which are
  the main part of the Xfce4 configuration system. If you want to
@@ -40,9 +41,9 @@ Description: Development files for libxfconf
 Package: libxfconf-0-3
 Section: libs
 Architecture: any
+Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: xfconf, ${misc:Depends}, ${shlibs:Depends}
-Multi-Arch: same
 Description: Client library for Xfce4 configure interface
  This package contains a library which can be used by every
  program that aims to be a configuration-manager for Xfce4.
@@ -56,14 +57,33 @@ Depends: default-dbus-session-bus | dbus-session-bus,
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: ${shlibs:Recommends}
+Suggests: xfconf-gsettings-backend
 Description: utilities for managing settings in Xfce
  xfconf contains xfconfd and xfconf-query.
   - xfconfd handles the Xfce settings storage
   - xfconf-query enables users to tune settings from command line
 
+Package: xfconf-gsettings-backend
+Architecture: any
+Multi-Arch: same
+Depends: xfconf, ${misc:Depends}, ${shlibs:Depends}
+Provides: gsettings-backend
+Description: utilities for managing settings in Xfce - gsettings backend
+ xfconf contains xfconfd and xfconf-query.
+  - xfconfd handles the Xfce settings storage
+  - xfconf-query enables users to tune settings from command line
+ .
+ This package contains a back-end for GSettings. It is needed by
+ applications accessing settings through GSettings to set custom values
+ and listen for changes.
+ .
+ By installing this package the default backend is changed to xfconf via
+ /etc/X11/Xsession.d/55xfconf.
+
 Package: gir1.2-xfconf-0
 Section: introspection
 Architecture: any
+Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${gir:Depends}, ${misc:Depends}
 Description: utilities for managing settings in Xfce - introspection support

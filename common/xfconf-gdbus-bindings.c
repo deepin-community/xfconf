@@ -17,6 +17,52 @@
 #  include <gio/gunixfdlist.h>
 #endif
 
+#ifdef G_ENABLE_DEBUG
+#define g_marshal_value_peek_boolean(v)  g_value_get_boolean (v)
+#define g_marshal_value_peek_char(v)     g_value_get_schar (v)
+#define g_marshal_value_peek_uchar(v)    g_value_get_uchar (v)
+#define g_marshal_value_peek_int(v)      g_value_get_int (v)
+#define g_marshal_value_peek_uint(v)     g_value_get_uint (v)
+#define g_marshal_value_peek_long(v)     g_value_get_long (v)
+#define g_marshal_value_peek_ulong(v)    g_value_get_ulong (v)
+#define g_marshal_value_peek_int64(v)    g_value_get_int64 (v)
+#define g_marshal_value_peek_uint64(v)   g_value_get_uint64 (v)
+#define g_marshal_value_peek_enum(v)     g_value_get_enum (v)
+#define g_marshal_value_peek_flags(v)    g_value_get_flags (v)
+#define g_marshal_value_peek_float(v)    g_value_get_float (v)
+#define g_marshal_value_peek_double(v)   g_value_get_double (v)
+#define g_marshal_value_peek_string(v)   (char*) g_value_get_string (v)
+#define g_marshal_value_peek_param(v)    g_value_get_param (v)
+#define g_marshal_value_peek_boxed(v)    g_value_get_boxed (v)
+#define g_marshal_value_peek_pointer(v)  g_value_get_pointer (v)
+#define g_marshal_value_peek_object(v)   g_value_get_object (v)
+#define g_marshal_value_peek_variant(v)  g_value_get_variant (v)
+#else /* !G_ENABLE_DEBUG */
+/* WARNING: This code accesses GValues directly, which is UNSUPPORTED API.
+ *          Do not access GValues directly in your code. Instead, use the
+ *          g_value_get_*() functions
+ */
+#define g_marshal_value_peek_boolean(v)  (v)->data[0].v_int
+#define g_marshal_value_peek_char(v)     (v)->data[0].v_int
+#define g_marshal_value_peek_uchar(v)    (v)->data[0].v_uint
+#define g_marshal_value_peek_int(v)      (v)->data[0].v_int
+#define g_marshal_value_peek_uint(v)     (v)->data[0].v_uint
+#define g_marshal_value_peek_long(v)     (v)->data[0].v_long
+#define g_marshal_value_peek_ulong(v)    (v)->data[0].v_ulong
+#define g_marshal_value_peek_int64(v)    (v)->data[0].v_int64
+#define g_marshal_value_peek_uint64(v)   (v)->data[0].v_uint64
+#define g_marshal_value_peek_enum(v)     (v)->data[0].v_long
+#define g_marshal_value_peek_flags(v)    (v)->data[0].v_ulong
+#define g_marshal_value_peek_float(v)    (v)->data[0].v_float
+#define g_marshal_value_peek_double(v)   (v)->data[0].v_double
+#define g_marshal_value_peek_string(v)   (v)->data[0].v_pointer
+#define g_marshal_value_peek_param(v)    (v)->data[0].v_pointer
+#define g_marshal_value_peek_boxed(v)    (v)->data[0].v_pointer
+#define g_marshal_value_peek_pointer(v)  (v)->data[0].v_pointer
+#define g_marshal_value_peek_object(v)   (v)->data[0].v_pointer
+#define g_marshal_value_peek_variant(v)  (v)->data[0].v_pointer
+#endif /* !G_ENABLE_DEBUG */
+
 typedef struct
 {
   GDBusArgInfo parent_struct;
@@ -151,6 +197,276 @@ _g_value_equal (const GValue *a, const GValue *b)
   return ret;
 }
 
+static void
+_g_dbus_codegen_marshal_VOID__STRING_STRING_VARIANT (
+    GClosure     *closure,
+    GValue       *return_value G_GNUC_UNUSED,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef void (*_GDbusCodegenMarshalVoid_StringStringVariantFunc)
+       (void *data1,
+        const gchar *arg_channel,
+        const gchar *arg_property,
+        GVariant *arg_value,
+        void *data2);
+  _GDbusCodegenMarshalVoid_StringStringVariantFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+
+  g_return_if_fail (n_param_values == 4);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalVoid_StringStringVariantFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            g_marshal_value_peek_string (param_values + 1),
+            g_marshal_value_peek_string (param_values + 2),
+            g_marshal_value_peek_variant (param_values + 3),
+            data2);
+}
+
+static void
+_g_dbus_codegen_marshal_VOID__STRING_STRING (
+    GClosure     *closure,
+    GValue       *return_value G_GNUC_UNUSED,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef void (*_GDbusCodegenMarshalVoid_StringStringFunc)
+       (void *data1,
+        const gchar *arg_channel,
+        const gchar *arg_property,
+        void *data2);
+  _GDbusCodegenMarshalVoid_StringStringFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+
+  g_return_if_fail (n_param_values == 3);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalVoid_StringStringFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            g_marshal_value_peek_string (param_values + 1),
+            g_marshal_value_peek_string (param_values + 2),
+            data2);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING_VARIANT (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectStringStringVariantFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        const gchar *arg_channel,
+        const gchar *arg_property,
+        GVariant *arg_value,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectStringStringVariantFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 5);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectStringStringVariantFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              g_marshal_value_peek_string (param_values + 2),
+              g_marshal_value_peek_string (param_values + 3),
+              g_marshal_value_peek_variant (param_values + 4),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectStringStringFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        const gchar *arg_channel,
+        const gchar *arg_property,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectStringStringFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 4);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectStringStringFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              g_marshal_value_peek_string (param_values + 2),
+              g_marshal_value_peek_string (param_values + 3),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING_BOOLEAN (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectStringStringBooleanFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        const gchar *arg_channel,
+        const gchar *arg_property,
+        gboolean arg_recursive,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectStringStringBooleanFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 5);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectStringStringBooleanFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              g_marshal_value_peek_string (param_values + 2),
+              g_marshal_value_peek_string (param_values + 3),
+              g_marshal_value_peek_boolean (param_values + 4),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 2);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
 /* ------------------------------------------------------------------------
  * Code for interface org.xfce.Xfconf
  * ------------------------------------------------------------------------
@@ -163,6 +479,14 @@ _g_value_equal (const GValue *a, const GValue *b)
  *
  * This section contains code for working with the <link linkend="gdbus-interface-org-xfce-Xfconf.top_of_page">org.xfce.Xfconf</link> D-Bus interface in C.
  */
+
+enum
+{
+  XFCONF__EXPORTED_PROPERTY_CHANGED,
+  XFCONF__EXPORTED_PROPERTY_REMOVED,
+};
+
+static unsigned XFCONF__EXPORTED_SIGNALS[2] = { 0 };
 
 /* ---- Introspection data for org.xfce.Xfconf ---- */
 
@@ -689,11 +1013,128 @@ xfconf_exported_interface_info (void)
  * Returns: The last property id.
  */
 guint
-xfconf_exported_override_properties (GObjectClass *klass, guint property_id_begin)
+xfconf_exported_override_properties (GObjectClass *klass G_GNUC_UNUSED, guint property_id_begin)
 {
   return property_id_begin - 1;
 }
 
+
+inline static void
+xfconf_exported_signal_marshal_property_changed (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_VOID__STRING_STRING_VARIANT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_signal_marshal_property_removed (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_VOID__STRING_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_set_property (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING_VARIANT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_get_property (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_get_all_properties (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_property_exists (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_reset_property (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING_BOOLEAN (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_list_channels (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+xfconf_exported_method_marshal_is_property_locked (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_STRING_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
 
 
 /**
@@ -735,9 +1176,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.SetProperty">SetProperty()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_set_property() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_set_property() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-set-property",
     G_TYPE_FROM_INTERFACE (iface),
@@ -745,7 +1186,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_set_property),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_set_property,
     G_TYPE_BOOLEAN,
     4,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_VARIANT);
@@ -759,9 +1200,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.GetProperty">GetProperty()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_get_property() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_get_property() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-get-property",
     G_TYPE_FROM_INTERFACE (iface),
@@ -769,7 +1210,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_get_property),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_get_property,
     G_TYPE_BOOLEAN,
     3,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING);
@@ -783,9 +1224,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.GetAllProperties">GetAllProperties()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_get_all_properties() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_get_all_properties() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-get-all-properties",
     G_TYPE_FROM_INTERFACE (iface),
@@ -793,7 +1234,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_get_all_properties),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_get_all_properties,
     G_TYPE_BOOLEAN,
     3,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING);
@@ -807,9 +1248,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.PropertyExists">PropertyExists()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_property_exists() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_property_exists() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-property-exists",
     G_TYPE_FROM_INTERFACE (iface),
@@ -817,7 +1258,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_property_exists),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_property_exists,
     G_TYPE_BOOLEAN,
     3,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING);
@@ -832,9 +1273,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.ResetProperty">ResetProperty()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_reset_property() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_reset_property() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-reset-property",
     G_TYPE_FROM_INTERFACE (iface),
@@ -842,7 +1283,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_reset_property),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_reset_property,
     G_TYPE_BOOLEAN,
     4,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN);
@@ -854,9 +1295,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.ListChannels">ListChannels()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_list_channels() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_list_channels() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-list-channels",
     G_TYPE_FROM_INTERFACE (iface),
@@ -864,7 +1305,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_list_channels),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_list_channels,
     G_TYPE_BOOLEAN,
     1,
     G_TYPE_DBUS_METHOD_INVOCATION);
@@ -878,9 +1319,9 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-xfce-Xfconf.IsPropertyLocked">IsPropertyLocked()</link> D-Bus method.
    *
-   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_is_property_locked() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call xfconf_exported_complete_is_property_locked() or e.g. g_dbus_method_invocation_return_error() on it) and no other signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
    *
-   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   * Returns: %G_DBUS_METHOD_INVOCATION_HANDLED or %TRUE if the invocation was handled, %G_DBUS_METHOD_INVOCATION_UNHANDLED or %FALSE to let other signal handlers run.
    */
   g_signal_new ("handle-is-property-locked",
     G_TYPE_FROM_INTERFACE (iface),
@@ -888,7 +1329,7 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
     G_STRUCT_OFFSET (XfconfExportedIface, handle_is_property_locked),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      xfconf_exported_method_marshal_is_property_locked,
     G_TYPE_BOOLEAN,
     3,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRING, G_TYPE_STRING);
@@ -905,15 +1346,16 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("property-changed",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (XfconfExportedIface, property_changed),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_VARIANT);
+  XFCONF__EXPORTED_SIGNALS[XFCONF__EXPORTED_PROPERTY_CHANGED] =
+    g_signal_new ("property-changed",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (XfconfExportedIface, property_changed),
+      NULL,
+      NULL,
+      xfconf_exported_signal_marshal_property_changed,
+      G_TYPE_NONE,
+      3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_VARIANT);
 
   /**
    * XfconfExported::property-removed:
@@ -925,15 +1367,16 @@ xfconf_exported_default_init (XfconfExportedIface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("property-removed",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (XfconfExportedIface, property_removed),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    2, G_TYPE_STRING, G_TYPE_STRING);
+  XFCONF__EXPORTED_SIGNALS[XFCONF__EXPORTED_PROPERTY_REMOVED] =
+    g_signal_new ("property-removed",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (XfconfExportedIface, property_removed),
+      NULL,
+      NULL,
+      xfconf_exported_signal_marshal_property_removed,
+      G_TYPE_NONE,
+      2, G_TYPE_STRING, G_TYPE_STRING);
 
 }
 
@@ -953,7 +1396,7 @@ xfconf_exported_emit_property_changed (
     const gchar *arg_property,
     GVariant *arg_value)
 {
-  g_signal_emit_by_name (object, "property-changed", arg_channel, arg_property, arg_value);
+  g_signal_emit (object, XFCONF__EXPORTED_SIGNALS[XFCONF__EXPORTED_PROPERTY_CHANGED], 0, arg_channel, arg_property, arg_value);
 }
 
 /**
@@ -970,7 +1413,7 @@ xfconf_exported_emit_property_removed (
     const gchar *arg_channel,
     const gchar *arg_property)
 {
-  g_signal_emit_by_name (object, "property-removed", arg_channel, arg_property);
+  g_signal_emit (object, XFCONF__EXPORTED_SIGNALS[XFCONF__EXPORTED_PROPERTY_REMOVED], 0, arg_channel, arg_property);
 }
 
 /**
@@ -1742,7 +2185,7 @@ _out:
  */
 void
 xfconf_exported_complete_set_property (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation)
 {
   g_dbus_method_invocation_return_value (invocation,
@@ -1761,7 +2204,7 @@ xfconf_exported_complete_set_property (
  */
 void
 xfconf_exported_complete_get_property (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation,
     GVariant *value)
 {
@@ -1782,7 +2225,7 @@ xfconf_exported_complete_get_property (
  */
 void
 xfconf_exported_complete_get_all_properties (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation,
     GVariant *properties)
 {
@@ -1803,7 +2246,7 @@ xfconf_exported_complete_get_all_properties (
  */
 void
 xfconf_exported_complete_property_exists (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation,
     gboolean exists)
 {
@@ -1823,7 +2266,7 @@ xfconf_exported_complete_property_exists (
  */
 void
 xfconf_exported_complete_reset_property (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation)
 {
   g_dbus_method_invocation_return_value (invocation,
@@ -1842,7 +2285,7 @@ xfconf_exported_complete_reset_property (
  */
 void
 xfconf_exported_complete_list_channels (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation,
     const gchar *const *channels)
 {
@@ -1863,7 +2306,7 @@ xfconf_exported_complete_list_channels (
  */
 void
 xfconf_exported_complete_is_property_locked (
-    XfconfExported *object,
+    XfconfExported *object G_GNUC_UNUSED,
     GDBusMethodInvocation *invocation,
     gboolean locked)
 {
@@ -1913,17 +2356,17 @@ xfconf_exported_proxy_finalize (GObject *object)
 }
 
 static void
-xfconf_exported_proxy_get_property (GObject      *object,
-  guint         prop_id,
-  GValue       *value,
+xfconf_exported_proxy_get_property (GObject      *object G_GNUC_UNUSED,
+  guint         prop_id G_GNUC_UNUSED,
+  GValue       *value G_GNUC_UNUSED,
   GParamSpec   *pspec G_GNUC_UNUSED)
 {
 }
 
 static void
-xfconf_exported_proxy_set_property (GObject      *object,
-  guint         prop_id,
-  const GValue *value,
+xfconf_exported_proxy_set_property (GObject      *object G_GNUC_UNUSED,
+  guint         prop_id G_GNUC_UNUSED,
+  const GValue *value G_GNUC_UNUSED,
   GParamSpec   *pspec G_GNUC_UNUSED)
 {
 }
@@ -2031,7 +2474,7 @@ xfconf_exported_proxy_class_init (XfconfExportedProxyClass *klass)
 }
 
 static void
-xfconf_exported_proxy_iface_init (XfconfExportedIface *iface)
+xfconf_exported_proxy_iface_init (XfconfExportedIface *iface G_GNUC_UNUSED)
 {
 }
 
@@ -2423,7 +2866,7 @@ out:
 }
 
 static void
-xfconf_exported_skeleton_dbus_interface_flush (GDBusInterfaceSkeleton *_skeleton)
+xfconf_exported_skeleton_dbus_interface_flush (GDBusInterfaceSkeleton *_skeleton G_GNUC_UNUSED)
 {
 }
 

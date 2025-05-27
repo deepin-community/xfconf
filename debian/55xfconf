@@ -1,0 +1,6 @@
+# Set the gsettings backend to xfconf, by default it is dconf with a fallback to memory.
+export GSETTINGS_BACKEND=xfconf
+if [ -n "$DBUS_SESSION_BUS_ADDRESS" ] && \
+  command -v dbus-update-activation-environment >/dev/null; then
+    dbus-update-activation-environment --verbose --systemd GSETTINGS_BACKEND
+fi

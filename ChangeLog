@@ -1,3 +1,2366 @@
+commit 078859af53858cddfa99c4b72070a70ed3eb6772
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 15 10:33:04 2024 +0100
+
+    Updates for release
+
+commit 0a51917b5904943bb7fed32d3974073c52c23a4f
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Dec 9 12:53:44 2024 +0100
+
+    I18n: Update translation ro (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 6e13d2576b3c46b6b9f0f6ee4ad1b7f146ca77ec
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 1 16:26:25 2024 +0100
+
+    Back to development
+
+commit 8f9d673b363100a7642a3730b99c03800de40e0b
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 1 16:24:54 2024 +0100
+
+    Updates for release
+
+commit 225d3c8979c4d2b3692603d58871b680ae3b23a1
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Tue Nov 26 14:20:24 2024 -0500
+
+    Fix FakeGdkRGBA and FakeGdkColor leaks
+
+commit 9c4ea6c1c4c5f67ef825a614faa06bb9f90d6e28
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Tue Nov 26 15:16:20 2024 -0500
+
+    tests: Fix D-Bus error reporting when xfconfd is not auto-started
+    
+    Completes: 54df98d3fd
+
+commit 508d6e6c3b38a98de58d977ca66d29d463841749
+Author: Anonymous <noreply@xfce.org>
+Date:   Thu Nov 21 00:53:33 2024 +0100
+
+    I18n: Update translation pl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 48ee66a2b78ffb599f8108503ab4d8f544b40683
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Nov 16 12:53:01 2024 +0100
+
+    I18n: Update translation gl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 621ce5ad7bb7553da11876d93137b8b9a4ed791c
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Nov 4 00:59:02 2024 +0100
+
+    I18n: Update translation cs (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 37a1bac17f74f11efa339b2e087c0fc2806cfd20
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Fri Nov 1 22:31:22 2024 +0100
+
+    Back to development
+
+commit 7125e2fb4c8c7503ff5d7bb5f868731b2b1a0130
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Fri Nov 1 21:40:21 2024 +0100
+
+    Updates for release
+
+commit 263f1e930f6d11a8e0b33b71bccd36f9040db89e
+Author: Veronika Kerm <veronika.kerm@gmail.com>
+Date:   Tue Oct 22 16:17:53 2024 +0000
+
+    xfconf-query: print array property values when -lv
+
+commit 490ccadb25037cf80bd68cc1df4ac3082de5dd51
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Oct 18 08:18:34 2024 +0200
+
+    Back to development
+
+commit 10e420b0b73917e2afb1e9b73a843d679333df85
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Oct 18 08:09:56 2024 +0200
+
+    Updates for release
+
+commit 80c2d44a6587fb209ce6196e2096ce3c99df9140
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Mon Oct 14 21:52:33 2024 -0700
+
+    Safer/better way to find GdkColor/GdkRGBA GTypes in the unified API
+    
+    Since an app may never load or use a GObject class or anything that ever
+    calls gdk_color_get_type() / gdk_rgba_get_type(), those types may never
+    get registered with the type system.  And since now we try to find their
+    types much earlier, that could result in a g_critical warning, even if
+    the callers never intended to use those types.
+    
+    Just as bad, if a caller *does* want to use those types, but first binds
+    something that doesn't use those types, before they're registered with
+    the type system, then they will fail to work even once they *are*
+    registered with the type system, because of the GOnce.
+    
+    So instead, unless xfconf_g_property_bind_gdkcolor() or
+    xfconf_g_property_bind_gdkrgba() are called directly, we ignore failures
+    to resolve those types, and, further, only try to resolve them in
+    xfconf_g_property_bind() in situations where someone might actually be
+    trying to bind one of those types.
+    
+    Closes #42
+
+commit 12f310338ef39abfd26b4d4575ea98b6a45aba15
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Thu Oct 10 14:06:58 2024 -0700
+
+    Mark xfconf_g_property_bind_gdkcolor/gdkrgba() as deprecated
+
+commit 60f7d8cf6c9e63d8879837f5b4542a2ee8493455
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Thu Oct 10 14:05:53 2024 -0700
+
+    Allow calling xfconf_g_property_bind() with GdkColor or GdkRGBA types
+    
+    There's really no reason for the "special case" public APIs for binding
+    GdkColor and GdkRGBA types: we can simply check for these in
+    xfconf_g_property_bind() and handle them specially.
+    
+    This is helpful for cases where you have a bunch of properties to bind,
+    and have listed them in a struct that matches setting names and types
+    with gobject property names.  That way you don't have to special-case
+    any GdkRGBA or GdkColor types when creating the binding.
+
+commit 982ef93c95e63b6e0dd89386cf499e1edf41720d
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Thu Oct 10 14:04:38 2024 -0700
+
+    Clean up how GdkColor/GdkRGBA GTypes are initialized
+    
+    This should be done behind a GOnce for safety; while XfconfChannel isn't
+    thread-safe, users can create separate channels on separate threads.
+
+commit 38e0c40201ec8a455a1421967a9a7d7a458fe7d0
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Oct 4 12:53:56 2024 +0200
+
+    I18n: Update translation pl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 95436f2f709f519760fad17e1e554acf4d05ad32
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Oct 2 18:56:14 2024 +0200
+
+    build: Bump requirements for Xfce 4.20
+
+commit 54df98d3fd27fec38ab0e261b9707b12293e2d33
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Sep 19 13:48:38 2024 -0400
+
+    tests: Report D-Bus error when xfconfd is not auto-started
+    
+    This should make it easier to debug intermittent distcheck failures
+    on CI.
+
+commit 2b2c15e464846ebff7d3fd731093276565a4d1aa
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Sep 19 13:44:16 2024 -0400
+
+    tests: Fix xfconf_channel_get_string leak
+
+commit 3e9742ea45a97df0cc269ab996158d43410cc619
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Sep 19 05:41:01 2024 -0400
+
+    cache: Fix leaks in xfconf_cache_handle_property_changed
+
+commit e6156aac0c94210d87efed63f522d301f5e00933
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Sep 19 06:30:14 2024 -0400
+
+    ci: Update references for autotools/meson split
+
+commit 2153939683e4829520803d769366993ce06b0f29
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Sep 17 23:26:26 2024 +0200
+
+    Apply .clang-format file
+
+commit 9ffdfc26e7f8aaef8381446b8f7a6dfd69b3d51b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Sep 17 23:41:47 2024 +0200
+
+    Preliminary cleanup
+
+commit a3d4ca2a9b272a473261738ec444bd438ca13a45
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Sep 17 19:43:53 2024 +0200
+
+    Sort includes
+
+commit 62814f9d3e93303d6a5531b98373c9a327ba7964
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Sep 17 19:37:57 2024 +0200
+
+    clang-format: Add file
+    
+    Related: apps/orage#32, xfce/xfce4-dev-tools!101
+
+commit 459394387170b99c24478b4698c6ed5378258e2a
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Tue Sep 3 15:04:46 2024 -0700
+
+    Clarify xfconf_channel_set_string() API docs
+
+commit c2356e16f3a1588051332c233ef401fb8827627d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Sep 3 16:01:04 2024 +0200
+
+    channel: Fix get_string() return value
+    
+    NULL is an authorized value for set_string() as it is for GValue (unlike
+    GVariant).
+
+commit 619cb8e945cd568083809ca7ff4b1f4856d5a4f9
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Aug 15 10:53:45 2024 -0400
+
+    cache: Fix leak in xfconf_cache_prefetch
+    
+    Closes #41
+
+commit d21a1a55ef8d8f765d5d6aaffb57a102ffe0290b
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Aug 15 07:54:44 2024 -0400
+
+    xfconf-query: Fix GOptionContext memory leak
+
+commit b92616d302ca9ab6920d1c6e693f5ce6c511394f
+Author: Anonymous <noreply@xfce.org>
+Date:   Wed Jul 24 00:55:18 2024 +0200
+
+    I18n: Update translation ast (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 4acf029b2de18ae8a8bf0f3c197a87e9c1ed6c1c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   Mon Sep 28 17:01:36 2015 +0100
+
+    Add a systemd user unit corresponding to the D-Bus session service
+    
+    This lets systemd put xfconfd in its own cgroup, instead of treating it
+    as part of dbus.service.
+    
+    Closes: #4
+    Co-authored-by: Gaël Bonithon <gael@xfce.org>
+
+commit 6153ff41b102d4d09a5eae39415292f49ef57b89
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jun 7 16:30:55 2024 +0200
+
+    gcc-analyzer: Fix -Wanalyzer-null-dereference
+    
+    property != NULL is checked upstream in xfconf-channel.c, and this
+    probably shouldn't be an assert in xfconf_cache_old_item_new() (which
+    by itself works with property == NULL)
+    
+    Name validation in xfconf-backend-perchannel-xml.c however should
+    probably be turned into normal checks instead of asserts, let's add
+    these sanity checks anyway.
+
+commit 3204a6394279c2d1a0ce3b5757cb279eb4ffdd9b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jun 7 16:11:20 2024 +0200
+
+    scan-build: Add false positive file
+
+commit a442633bb3e7aa816e03dcd1469d6cdbba538eb7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jun 4 22:37:44 2024 +0200
+
+    ci: Fix jobs extending .distcheck
+    
+    Update after xfce4-dev-tools@8bf2175d178313c2b6b6a7efb634cd98917c2290.
+
+commit c3c525bf0487e0abce8ee480b70bd7dd5db791a9
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jun 4 13:00:28 2024 +0200
+
+    build: Use AM_DISTCHECK_CONFIGURE_FLAGS
+    
+    So user can extend or override the flags provided there by defining the
+    DISTCHECK_CONFIGURE_FLAGS variable. Especially required since
+    xfce/xfce4-dev-tools!108.
+
+commit 573e01d304e00eafc5c47fcb969b210630a1591a
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Jun 1 17:40:19 2024 +0200
+
+    channel: Fix get_properties()
+    
+    This function is documented as returning a new GHashTable when there is
+    no programmer error, so it should return an empty GHashTable when it
+    fails to get the result for some reason (e.g. the requested base
+    property does not exist).
+
+commit 1a79acdcf04ff7b293b3a7f7272a054c6a80c054
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 23 10:33:33 2024 +0200
+
+    channel: Warn if queried type does not match property type
+    
+    See !39 for a discussion of possible type conversion.
+    
+    Closes: #39
+
+commit e90b4c635345fce9b3a166f7163c34c8d23ed13f
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Thu Apr 4 16:54:29 2024 -0700
+
+    Add missing GIR annotations
+    
+    Some nullability and constructor annotations were missing, causing the
+    Rust binding generator to make a few mistakes.
+
+commit 522c6d4b6ff441bd585f3a436eb41e5a03607ca3
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Feb 29 15:26:02 2024 +0100
+
+    Back to development
+
+commit 71e742d3a79193899ed37a007b0abcc4b8ce1f5d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Feb 29 15:25:39 2024 +0100
+
+    Updates for release
+
+commit 22f291a0c290b2a5cb2790a4df10f8441f494fde
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Feb 29 15:09:56 2024 +0100
+
+    Update copyright year
+
+commit 0614876537931a12e809621d8987baa9abe5d1b0
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Feb 13 20:09:14 2024 +0100
+
+    xml-backend: Bump XML version to 1.1 in written files
+    
+    We use g_markup_escape_text() to write these files and its documentation
+    states that it can produce characters that are not valid XML 1.0 but
+    only 1.1, so that sounds better.
+
+commit 9f1cbdd2520756e1475cf2de6adea16d92337c94
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Feb 13 19:57:27 2024 +0100
+
+    xml-backend: Escape whitespaces when writing file to disk
+    
+    An old bug that has surprisingly never been reported. As stated in the
+    g_markup_escape_text() documentation, white spaces are not escaped,
+    whereas GMarkupParser expects them to be escaped on reading (otherwise
+    they are replaced by a space).
+    
+    Related: https://gitlab.gnome.org/GNOME/glib/-/issues/2080
+
+commit 6f4c1344093e315ab5bc7746859b02537deda889
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jan 5 12:53:47 2024 +0100
+
+    I18n: Update po/LINGUAS list
+
+commit 88a616d5264713551666ddf1c65922884c7d9d68
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jan 5 12:53:47 2024 +0100
+
+    I18n: Add new translation et (52%).
+    
+    35 translated messages, 32 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 8e99ca4d7b62b2779e566b853033c139bbe85cf7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Dec 20 13:08:58 2023 +0100
+
+    Fix memory leaks around xfconf_gvariant_to_gvalue()
+
+commit c80a84cdd6767a8722b5955669c4732d2a31a7e8
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Dec 20 13:00:15 2023 +0100
+
+    Fix memory management of xfconf arrays
+    
+    Sometimes there's a leak if arrays don't always have a destroy function,
+    and sometimes a segfault if they always do. This commit fixes both
+    points.
+
+commit ade7e8e017e9d1ba5dfc098bb392f73d0a153e66
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Oct 17 17:01:27 2023 +0200
+
+    cache: Fix overwritten error
+    
+    Fixes: 6561c9fe940d4acb07c5eae63867c46683a02f2c
+    Related: !33
+
+commit 03f7ff961fd46c9141aba624a278e19de0bf3211
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Oct 18 07:50:16 2023 +0200
+
+    cache: Fix uncached value
+    
+    Closes: #35
+    Fixes: 6561c9fe940d4acb07c5eae63867c46683a02f2c
+    Related: !33
+
+commit 832750ba9bc1c0f28efb28df530f01e8ccc1b14f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Oct 17 11:12:36 2023 +0200
+
+    Back to development
+
+commit cd5400ab6071837c505256f5c028f41b9035264c
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Oct 17 11:11:59 2023 +0200
+
+    Updates for release
+
+commit 6561c9fe940d4acb07c5eae63867c46683a02f2c
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Wed Oct 11 21:41:02 2023 -0700
+
+    Cache property-not-found responses in XfconfCache
+    
+    Some apps (like xfce4-terminal) will query certain properties very
+    often, and those properties are often not changed from their defaults,
+    and thus do not have any value stored in xfconf.  If properties are not
+    found, we can cache that state in XfconfCache and avoid xfconfd
+    round-trips.  If the property is later set, xfconfd will emit
+    PropertyChanged, and we will update our cache with the newly-set value.
+
+commit 94a4f1c28498c31776a5ce701e6228ef77c5a468
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Fri Sep 22 17:49:47 2023 -0700
+
+    Don't reset scheduled save timer on every write
+    
+    While perhaps unlikely, if even one xfconf client modifies a setting at
+    an interval of less than 5 seconds (or there are just enough random
+    setting modifications from random apps), then changes to various
+    channels could never get written to disk until xfconfd shuts down.  If
+    xfconfd never shuts down in an orderly manner (crash, power failure,
+    whatever), then every settings write could be lost.
+    
+    Even if the situation is much more mild, and some sort of settings
+    modification "storm" only happens every now and then, we could see the
+    actual flush to disk being delayed by several minutes, which increases
+    the window of time for possible data loss if there's a crash or power
+    failure.
+    
+    Instead, we should just flush to disk *at most* 5 seconds after a write.
+    If more writes come in during that 5-second delay, they shouldn't reset
+    the timer; they should just get flushed out after whatever remaining
+    seconds have elapsed.
+
+commit f8e9bf3e84b08f763b5bfb811a3a5f0429908994
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Aug 5 20:46:46 2023 +0200
+
+    xfconf-query: Sort channel list (-l or -m alone)
+
+commit 8a341d710853cc00f97366fe0ead034238186435
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Aug 5 20:00:29 2023 +0200
+
+    docs: Fix transfer type of xfconf_list_channels()
+
+commit 1c81b4b024df154028716debcbc5453da355ba21
+Author: Anonymous <noreply@xfce.org>
+Date:   Tue Jun 13 00:53:24 2023 +0200
+
+    I18n: Update translation ca (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit a49427240d5ec1253fd7bed8787016f3f72061a2
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon May 15 19:33:28 2023 +0200
+
+    docs: Add clarification about bindings
+
+commit e22141cfa1c4ee6bc72b463bc6148840038e0c17
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 4 22:47:44 2023 +0200
+
+    I18n: Update po/LINGUAS list
+
+commit 8c65c536e51ed9846e1eedbca27082c335b9c284
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 4 21:52:36 2023 +0200
+
+    I18n: Update po/LINGUAS list
+
+commit c2f4dcc0f0294fd3ef4ec0912b83ffb62a5d104a
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 17 12:49:20 2023 +0200
+
+    Back to development
+
+commit fe40df842700a5062e4c5a1f7de00e782c299ee4
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 17 12:48:43 2023 +0200
+
+    Updates for release
+
+commit ae8208bd3dd0f3eee96863bf99d4b36b53b142ac
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 17 12:24:23 2023 +0200
+
+    Update copyright year
+
+commit a96bb8429bec8be49c8504cc469bdf1557908467
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 19:45:27 2023 +0200
+
+    build: Use m4_defined min versions and cleanup
+
+commit 9e4fcbd48562efc48f769ead4c1d463cc0ac4258
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 19:41:53 2023 +0200
+
+    build: Use XDT_CHECK_PACKAGE_BINARY
+
+commit 852a56e0924331b52ca5cf90993647aba0381701
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 19:35:25 2023 +0200
+
+    build: Use XDT_VERSION_INIT and get rid of configure.ac.in
+
+commit 340798371ce2ba101232fc73dde9d52607816f05
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 19:25:58 2023 +0200
+
+    build: Switch from intltool to gettext
+    
+    Related: xfce/xfce4-dev-tools#41
+
+commit 84dfcafb561b61edadc0b021f6f28c45b070e28d
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:01 2023 +0200
+
+    I18n: Update translation zh_TW (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 5382784d6b9ce848172cc57b3654b08a8394798a
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation zh_HK (94%).
+    
+    63 translated messages, 4 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 331b1ae4445d1ccef5c1e44f4783d8cb3582438d
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation zh_CN (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 419ef5aa88ed28417d00a6ca0b7e3357c40f60ac
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation uk (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e7cff21e02d521235242ac9de02c5d50fb6814da
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation tr (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit d342cd730b10263da36436fcb42ccf9bacf37c11
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation th (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit ee78e63e62fef381db82c6337d258fc7f34f8c27
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation sv (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 9a43bf0b91ebee76ddc047e28c99b6c73691439e
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation sr (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit f4f2520e36a5aa32c08cc32bccb760fa751eb604
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation sq (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 6d86f17d5831238ba8ffe0084b535335ec94f689
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 03:00:00 2023 +0200
+
+    I18n: Update translation sl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 50d65df5242b7917c7d620bbbab6987827dbd2c3
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation sk (97%).
+    
+    65 translated messages, 2 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e9e9dd98219b0daa34c2acc12b2c9f0698b50802
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation ru (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 6eebe4780ab275ddfc5572099428e286fc3db36a
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation ro (97%).
+    
+    65 translated messages, 2 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit af2d0cec185dc2a1ae90292040fcaf9697759f49
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation pt_BR (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 129e14f42baf94b19bbd48245152e6a251eab14b
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation pt (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 9c7ca5d36859b98f39776fa62e25deadb5bc6c90
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation pl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 824b0a09e8e828985df433a0c822d51c85513fce
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation oc (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 87512a341402765bf21c563ed397630229534786
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation nl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit ce3d464811416709cd7a255722ff2db4ec3d6bd2
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation nb (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 23d337b78eba0f4b9ded3bbf4c8db55e91ab1fc0
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:59 2023 +0200
+
+    I18n: Update translation ms (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit c70c7186e2c579744ad3a5e718ea218aa6cb5a0f
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation lt (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit dcf240b71e15dd3147cd669e3e101b952bcdab4f
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation ko (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit eebfd5fed0e4f5a6f38c6560c7750b931bb019f6
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation kk (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 989921397bd9b4e79677a43eaf05331358bd84c4
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation ja (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 99dfd244fbaddf9d8b9f72185e0a4572cfff4d94
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation it (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 40641514b14b37e348116ca287f5f8908514b2e1
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation is (64%).
+    
+    43 translated messages, 24 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit f32b26feed2e5c2e4b4e474d7c7d98220672aa17
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation id (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 784d489f71171a95ee825501d0e13b477d86b093
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation hye (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 38c42eae01ec7f67631ab2f99f9b90380ae0b877
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:58 2023 +0200
+
+    I18n: Update translation hy_AM (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 76194f7428cdeda03a58eda2058b8cbd89a94511
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation hu (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 327e22446104c6f7e9207322ba234337d2189666
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation hr (97%).
+    
+    65 translated messages, 2 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 90ef852296e9a5c9b6c9587afb7aaee2735a0dbd
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation hi (52%).
+    
+    35 translated messages, 32 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 0853323931076a5fee2b44019b7928d3d428d262
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation he (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 2e86c31cdd25f4f0f95c9e0b9a69681ba8c689b2
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation gl (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 05ac40341ce0f2a0735aa98aaa014e00b9658397
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation fr (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 3fdd500fae2691a3cf877fa8c7a0e36cf480f898
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation fi (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e7cdb2232b1c48b3f0d2c1b63f8351b3f6158249
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation eu (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 24ce6cca851fbae3c3f6b8374041cfdedd9d02be
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:57 2023 +0200
+
+    I18n: Update translation es (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit ae8178beb470210c375b8905d90a8ae4920a772b
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation en_GB (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit c2f4c5d0885607794f43c4f7f1a4ec8dbacbb911
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation en_CA (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 710d09dbe08be95f178978d3dcb5128829d41617
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation en_AU (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit fd934b252f64238a15bd957b27e4b8f6d3be4b19
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation el (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 3f1cb2573f896508ace2eb29c9ebbde1eb36267b
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation de (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e0729e5f54769c025d4706ee52afe4fa367633b4
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation da (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 7cea0dc80816e87c20b4cece7c918bc8e42413f4
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation cs (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 67e7af83a765eaea745d9dcbd999a688f78520d3
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation ca (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 69c94b14af2c607d9b7144f184c6e619cb70dd0c
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:56 2023 +0200
+
+    I18n: Update translation bg (100%).
+    
+    67 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 4eba345f6810af86ed50577a3e8cdc4640e1a0df
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 7 02:59:55 2023 +0200
+
+    I18n: Update translation be (98%).
+    
+    66 translated messages, 1 untranslated message.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 120efe8e9f258b07f4cbcbba3747164d8858d23c
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Apr 6 10:16:51 2023 +0200
+
+    xfconfd: Lower warning level
+    
+    This can happen sometimes, no need to trigger G_DEBUG=fatal-criticals
+    for that. Also it is not advisable to translate warnings.
+
+commit f76a4e69b4eb8735739370287e4f29b5e8b93b0c
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Mar 18 01:19:19 2023 +0100
+
+    I18n: Update translation ro (97%).
+    
+    66 translated messages, 2 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 7337dbc195f6efe3ef0d9b1f15c6f62dd747a14d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 27 20:06:57 2023 +0100
+
+    docs: Fix xfconf_channel_get() transfer annotation
+
+commit e5c73e154a1e43756f49d8fe0ec87715398aa239
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Feb 18 17:08:36 2023 +0100
+
+    Update bug report address
+
+commit 218644891cf375517e0a36298cecec9928866e0f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Feb 5 20:25:35 2023 +0100
+
+    docs: Fix unused declarations warning
+
+commit d7bce3ea4174596527666c547485b90ec9a58ff4
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Feb 5 20:23:51 2023 +0100
+
+    docs: Properly enable GI docs
+
+commit fb641f7d1a504e99ee8dd059976dfad36add1fc7
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Jan 30 12:53:57 2023 +0100
+
+    I18n: Update translation el (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e827705fd6cd8c6e0ff71c279a2d20fdf95161cb
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jan 20 12:54:38 2023 +0100
+
+    I18n: Update translation el (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 1899ff05a47c6d603d67bf8b019ee6b2618dc86f
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jan 13 12:55:45 2023 +0100
+
+    I18n: Update translation pt (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 6c9394a6c639ed2f967f98478fb2ef6d4299ea27
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Dec 30 13:16:50 2022 +0100
+
+    I18n: Update translation ko (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 291514bb459156f81004862e52896607311f6115
+Author: Theo Linkspfeifer <lastonestanding@tutanota.com>
+Date:   Sun Dec 18 13:04:48 2022 +0100
+
+    xfconfd: Fix check for "/" when building property name
+    
+    The faulty check breaks the recursive deletion of keyboard shortcuts
+    which are mapped to a single letter or number.
+    
+    Fixes: libxfce4ui#59
+    Related: libxfce4ui@0da4040d
+
+commit 37f7e5cd85a0d1eee6f6106d1d9f32914483f24c
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Nov 20 12:17:54 2022 +0100
+
+    xfconfd: Make xml backend case sensitive for channel names
+    
+    It was case insensitive for channel and property names since 2ab4e553,
+    so almost originally. Then the property names became case sensitive at
+    some point, and there are now several channels using property names
+    containing capital letters, e.g. those of Xfce4-settings.
+    
+    Channel names, on the other hand, remained case-insensitive, but only
+    halfway: only the insertion into the hash table is done in lower case.
+    But the fact that it is only halfway can cause various problems,
+    including unexpected channel resets (see #31).
+    
+    Since there seems to be no good reason to enforce case insensitivity for
+    channel names either, we simply remove this lowercase insertion into the
+    hash table.
+    
+    Fixes: #31
+    MR: !28
+    Related: !27, 2ab4e553fced4091066eb662b67eb5a8ac45deb6
+
+commit 7be81ac7dce93f5434bdefec740dcb68de309e93
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Dec 15 10:10:22 2022 +0100
+
+    Back to development
+
+commit fcbc9b83b8cdc0fba92e8b51ef6e08b43ef89cc6
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Dec 15 10:10:04 2022 +0100
+
+    Updates for release
+
+commit 8cd90eca07ff27450d603c3092b503d5c68e8d3f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Dec 5 21:53:16 2022 +0100
+
+    build: Bump requirements for Xfce 4.18
+
+commit 59747b46aa440ef4b5e9a339ff26e29dba1f3f23
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Dec 4 12:40:23 2022 +0100
+
+    xfconf: Prevent Use-After-Free in GClosureNotify
+    
+    Contrary to what the code assumed, the GClosureNotify of a signal
+    connection via `g_signal_connect_data()` is not always invoked
+    immediately after the signal handler is disconnected. The binding should
+    therefore only be freed if we are sure that both its GClosureNotify have
+    been invoked, i.e. when `binding->object == NULL` and
+    `binding->channel = NULL`.
+    
+    Related: !29
+
+commit c3e1f2001345f0b7b7ff159582ad43c9541080fc
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 30 16:51:49 2022 +0100
+
+    Back to development
+
+commit 7f93698277342fb4cfdd25b09a67e4ce0278807d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 30 16:51:27 2022 +0100
+
+    Updates for release
+
+commit 400adae8d6ee4154c2b10bf7e12a21bdd245d57d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 29 19:34:58 2022 +0100
+
+    Bump Libxfce4util to 4.17.3
+    
+    So we are sure that setlocale() is called.
+    
+    Completes: 3ce7f9db59f17e39f89264419abcb8fca63f1306
+
+commit 3ce7f9db59f17e39f89264419abcb8fca63f1306
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 29 18:25:02 2022 +0100
+
+    xfconf-query: Remove ENABLE_NLS ifdefs
+    
+    ENABLE_NLS is deprecated, it will not be supported by xfce4-dev-tools
+    4.18, and in this case setlocale() is called by xfce_textdomain() since
+    libxfce4util 4.17.3 anyway.
+
+commit 9539faf985fa531b6f9f4f61b24da457f8fb99f8
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 9 20:28:43 2022 +0100
+
+    Back to development
+
+commit 891a9868a5ff786d473999c7a8bba39858f118f7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 9 20:28:13 2022 +0100
+
+    Updates for release
+
+commit 9baf082fc8cad29feb21b65fed4dc3cfef3bd66d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 9 20:12:19 2022 +0100
+
+    Update copyright year
+
+commit be013856ef23a3f4eaf676165b8bbdc765cb0173
+Author: mikhailnov <mikhailnov@dumalogiya.ru>
+Date:   Wed Nov 9 18:37:46 2022 +0000
+
+    Create per-channel config directory if it does not exist
+    
+    Fixes: #20
+    MR: !15
+
+commit 74a0d8b99e92907a7ccc7f6ba00a4feb94a56a90
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 8 16:26:55 2022 +0100
+
+    xfconfd: Locale independent writing of floating point values
+    
+    Fixes: #33
+    MR: !26
+
+commit 5875c9767129983a2f3b312de93aefa4f9edbef4
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 1 18:57:53 2022 +0100
+
+    xfconfd: Silence GLib deprecation warning
+
+commit eff9244c490d7560e5358f17bbcf4fe1f2a93605
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 1 18:36:54 2022 +0100
+
+    Use `I_` from Libxfce4util
+
+commit fa46a2fbb30ca77d7bdf3d44bf92ac52aaa8a5bc
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Nov 1 18:33:14 2022 +0100
+
+    Update `.gitignore`
+
+commit 9484ebc3dc8569fa763493eac1ddf3ad47a0f9d5
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Thu Nov 3 19:04:22 2022 +0100
+
+    Fix "release" stage in CI
+    
+    - "release" stage need to run with xvfb too
+
+commit 3cbcd7ccf2fb8d4b2d1f21871de829bdfc55d55b
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Tue Nov 1 10:15:41 2022 +0100
+
+    Back to development
+
+commit 5d615fe88f0f3338dfa2dea2c3b0953e92552023
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Tue Nov 1 10:10:21 2022 +0100
+
+    Updates for release
+
+commit 27febae435c6aa7c103262200941c83ca29f7cef
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Tue Sep 6 16:45:57 2022 +0200
+
+    Bump GObject Introspection minimum version to 1.66
+    
+    In order to make this package LTO ready
+    
+    For more details, see xfconf#8
+
+commit cf532c9033a036c2886748fcb6fb3dc12cab2a42
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Jan 9 18:35:45 2022 +0100
+
+    Allow to choose an alternative service name prefix
+    
+    This is primarily for Flatpak packaging, where a "private service" is
+    desirable, although one could imagine using it in other contexts. The
+    prefix must be specified via the environment variable
+    `XFCONF_SERVICE_NAME_PREFIX`.
+    
+    Closes: #27
+    Related: tumbler!21
+    MR: !18
+
+commit f595c7dc614d36fd6d43ead0e0cad1540e08b476
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Jun 25 12:58:55 2022 +0200
+
+    I18n: Update translation el (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 2f7e4fcad6c551fcf8cb810235d5dea64920363a
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Apr 29 00:56:27 2022 +0200
+
+    I18n: Update translation en_GB (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 65e1a3cb75258c7c79c699019277d017f446d37d
+Author: Emin Tufan Çetin <etcetin@gmail.com>
+Date:   Fri Apr 1 00:56:32 2022 +0200
+
+    I18n: Update translation tr (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit b8368687d7c20c17c851106c89bc769ff58ad111
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Mar 6 23:26:58 2022 +0100
+
+    ci: Upload artifacts on failure without specifying a directory
+    
+    `on_failure` allows to retrieve artifacts in case of failure, and only
+    in that case: see
+    https://docs.gitlab.com/ee/ci/yaml/index.html#artifactswhen
+    
+    The build takes place in a directory of the form
+    `xfconf-${version}git${commit}/_build/sub` at the moment, but the
+    `_build/sub` part could possibly change in the future, as it is added by
+    Gitlab. So the easiest and most robust way seems to be to recover the
+    `test-suite.log` files without worrying about the path.
+    
+    See also https://gitlab.xfce.org/xfce/xfconf/-/merge_requests/19#note_43611
+
+commit c8ec007e98b609dd830f7665b9605a0894531b5c
+Author: Andre Miranda <andreldm@xfce.org>
+Date:   Sun Mar 6 17:52:05 2022 -0300
+
+    ci: Store tests results
+    
+    As 'expire_in' is not specified the default should be 30 days
+
+commit 0e3355a8dd9c732dfa09ff1528f5fef9de17af39
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jan 11 11:04:52 2022 +0100
+
+    Add a lifecycle manager to xfconfd
+    
+    Copied from Tumbler, with some adjustments.
+    
+    Closes #28, see !19 for more details.
+
+commit 4784fd5c274255d574c6fa600c1ce83dea76d159
+Author: Steve Harris <steve@jbs.ca>
+Date:   Sat Mar 5 00:56:10 2022 +0100
+
+    I18n: Update translation en_CA (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 90e30f2c6d881ad54251280775f00505f6960f2c
+Author: Yongha Hwang <mshrimp@sogang.ac.kr>
+Date:   Mon Feb 28 22:22:54 2022 +0000
+
+    Replace GTimeVal with gint64 epoch time
+
+commit a7a172f376f695ae50d118a17ea6a63941b77d91
+Author: Luna Jernberg <bittin@cafe8bitar.se>
+Date:   Thu Nov 18 12:56:43 2021 +0100
+
+    I18n: Update translation sv (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit f0540f8a034c4cba5f4086eb7f64e3748747491f
+Author: Avinash Sonawane <rootkea@gmail.com>
+Date:   Fri Nov 12 10:12:10 2021 +0530
+
+    Remove memset() overhead
+
+commit 619ca4f10f9f05d35cbc516861572e7dfb4c7e29
+Author: Avinash Sonawane <rootkea@gmail.com>
+Date:   Fri Nov 12 10:08:02 2021 +0530
+
+    Argument to g_strv_length() must not be NULL
+    
+    Thanks-to: Andre Miranda
+
+commit 84ae135e2f17aa5e679935a322878136f187707f
+Author: AndreiNovikov <cooking95@yandex.ru>
+Date:   Sun Nov 14 12:57:47 2021 +0100
+
+    I18n: Update translation ru (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0c85f067645999705bb410ceab9516432efa75ef
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Mar 11 21:52:51 2021 +0100
+
+    Silent `-Wcast-align` from Clang
+    
+    Fixes #25.
+
+commit 8ee9b43d1c2dc4afcfd5bd6ef14d60a1ba984e16
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Jan 25 14:58:00 2021 +0100
+
+    automake: Enable subdir-objects
+
+commit 62b9de046ce8206c42fac907e678f23209c35408
+Author: Anonymous <noreply@xfce.org>
+Date:   Wed Oct 20 00:53:05 2021 +0200
+
+    I18n: Update translation oc (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 3f2e5a0b0539270daa8f4b5fe6ba943ff327e61c
+Author: Demiray Muhterem <mdemiray@msn.com>
+Date:   Fri Oct 8 12:56:04 2021 +0200
+
+    I18n: Update translation tr (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7e5fdc71795f9173ae451fbf47d9d4f849cab542
+Author: abuyop <abuyop@gmail.com>
+Date:   Thu Sep 30 00:55:13 2021 +0200
+
+    I18n: Update translation ms (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 04034d10e26920cd88bb185e3d9726b830aad028
+Author: Michael Martins <michaelfm21@gmail.com>
+Date:   Tue Sep 21 00:53:01 2021 +0200
+
+    I18n: Update translation pt_BR (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 217e0b3ed6aa78016d53f9c13ab9209b0f0258ba
+Author: Anonymous <noreply@xfce.org>
+Date:   Sun Sep 19 00:53:20 2021 +0200
+
+    I18n: Update translation pt_BR (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1ac4d7473cb3f74a75e38e2aad56780c1cd05970
+Author: Taras Panchenko <top39@ukr.net>
+Date:   Sun Sep 5 00:53:09 2021 +0200
+
+    I18n: Update translation uk (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit a83b2a22f20d874e1780c7c4de209e31fe5e4891
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Thu Sep 2 00:53:36 2021 +0200
+
+    I18n: Update translation kk (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit b22e59581e14bc223a051d9a789e714b9faa09fb
+Author: Arnold Marko <arnold.marko@gmail.com>
+Date:   Thu Aug 19 12:55:27 2021 +0200
+
+    I18n: Update translation sl (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 591501963065cb920a9618446a696b0bfb09b64f
+Author: Саша Петровић <salepetronije@gmail.com>
+Date:   Sun Aug 15 00:52:47 2021 +0200
+
+    I18n: Update translation sr (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 78eb8059f4bfeb4141fe04a63fc4a626972554c2
+Author: Anonymous <noreply@xfce.org>
+Date:   Sun Aug 1 00:53:37 2021 +0200
+
+    I18n: Update translation da (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit dd55d452401bf53e54e74e487789cde6a1138b6f
+Author: Elishai Eliyahu <elishai@mailfence.com>
+Date:   Wed Jul 28 00:48:14 2021 +0200
+
+    I18n: Update translation he (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7139f53d8dfcedc35eedbc8d846462edea3529fe
+Author: Triyan W. Nugroho <triyan.wn@gmail.com>
+Date:   Sun Jul 25 00:48:17 2021 +0200
+
+    I18n: Update translation id (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 28e8b9bd0d31245cca8afd5d06733178e1cf2b37
+Author: 黃柏諺 <s8321414@gmail.com>
+Date:   Fri Jul 23 16:24:58 2021 +0200
+
+    I18n: Update translation zh_TW (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit e8666baf8f43afe0ab0c7e47dbcb83818e1a5206
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:58 2021 +0200
+
+    I18n: Update translation zh_HK (94%).
+    
+    64 translated messages, 4 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 3e3fe5f5fe3e24a2816ef50f9c77feb7712ead2d
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation ur (55%).
+    
+    38 translated messages, 30 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 2ddf9412c71a96c1c4262b3e2b3d3eaf56cd538a
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation ur_PK (55%).
+    
+    38 translated messages, 30 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 5cef3b0454b1c51ea753b3f33259a9999fdf8c0c
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation uk (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0b227016ccbda7979f358aa02f653be6acd03b39
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation ug (92%).
+    
+    63 translated messages, 5 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 63c1faa07acc84832ca863bfbeb1d0538ed8e691
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation tr (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 412c50ee48dd88b8094adef59e8dbd2fe1fd5db1
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation th (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 70f7d5b90a4d8893138388c155768315f47b8fce
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:57 2021 +0200
+
+    I18n: Update translation sv (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 04cda58a22a72811b450473864370172ac4cf010
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation sr (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7b06f847b91b47c0d21f68e21468f470fb054fce
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation sl (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 919f915a69176daba1a1d4ecc65f9869ab76b863
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation sk (97%).
+    
+    66 translated messages, 2 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 3af8f5bad18be16a870cb39f20332e4d95fabd0b
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation ru (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit e560983e96ec3c01936e056fa5ca4578ca91bce7
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation ro (95%).
+    
+    65 translated messages, 3 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0b14f793199fe8347965e2f01e6af42601ce8914
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation pt_BR (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1ea49470fbde0271d54b2b3bd5f96f87b9ff293e
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jul 23 16:24:56 2021 +0200
+
+    I18n: Update translation pl (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit c343b5643764941959738b31c21d901ade913316
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation oc (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 11924292073ffefc4aeb4e3f544a117720614ccb
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation nn (95%).
+    
+    65 translated messages, 3 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 669f9855a59a89b2e13d7242d347b3b3c56cbdc0
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation ms (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 42267f54ffb2b5d6add62cb24367bb88c5b47eed
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation lv (58%).
+    
+    40 translated messages, 28 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 4d8abbbdcb1b4ebe49997f538bbc978a2b564fec
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation lt (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit e94055be74173cc3e8c8aa9ba81b2a0edd41c4de
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation ko (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 923d518dc17eed474310e4af1dada560b4a69e4c
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation kk (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit f9dfa6b519b21f7bda285f82f0551daca78df922
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:55 2021 +0200
+
+    I18n: Update translation kab (55%).
+    
+    38 translated messages, 30 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit af1c625f518c006acb3763069a84ccdda8aa5044
+Author: Emanuele Petriglia <transifex@emanuelepetriglia.com>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation it (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7f8ef9d6842cca90115f73120cb88bf09f18e3c8
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation is (64%).
+    
+    44 translated messages, 24 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit de85019c2da45204d17454b0285e4ec3bcbb5982
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation id (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 39f78bfcf910307be4d069735f54e08a4d019584
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation hye (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit eec8c58d283052891222ac04719e18f88164580c
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation hy_AM (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 21447edc7d76f0a5ed8289cf815db942b06f1e44
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation hu (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 28793ed42a061d322aa7949c02dd601dd5e59244
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation hr (97%).
+    
+    66 translated messages, 2 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 38e1b1cd995c99ec3cebe8c5952823b0af96ce13
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:54 2021 +0200
+
+    I18n: Update translation hi (52%).
+    
+    36 translated messages, 32 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 42030eaac0375b2999faeb877077cef40c46239f
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation he (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit f3578723822d64b4fd9f72e9dd6667a3e4ad2d0f
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation fi (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1a9ae64f0fe1e37d1151ad6c4f1ae9180383efa0
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation en_GB (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 6858c74ac9f0fdb6f254eec9cb7d9535876f5454
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation en_CA (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit effc1c4574bf6ad644680bfedbd8c9c8e0bdf208
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation en_AU (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit efb3e7f40cfd40da4a760477298a3109d3f3f290
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:53 2021 +0200
+
+    I18n: Update translation el (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 32397bdc6b2e1c9f20d67e18cecddffc05f78bd7
+Author: Andreas Eitel <github-aneitel@online.de>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation de (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit e4b2f2a74d17815f713b81cb81eec0b86cc48231
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation da (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit cadaad327385f38739cf13cc92de0a99e67879f8
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation cs (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 9e39e4fb16618cdb979272112934be4a42455926
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation ca (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1aae8b91046a655a35033a71eb244161a64d7711
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation bn (66%).
+    
+    45 translated messages, 23 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0140fa30b71f85cde2ee4144b7d6589fea8e3377
+Author: Kiril Kirilov <cybercop_montana@abv.bg>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation bg (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit edb7734577b29c3fe69e865a9222b421b483bedb
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation be (98%).
+    
+    67 translated messages, 1 untranslated message.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 9fca72b2ee7cc66a8c585c19584067aa05e23156
+Author: Xfce Bot <transifex@xfce.org>
+Date:   Fri Jul 23 16:24:52 2021 +0200
+
+    I18n: Update translation ar (95%).
+    
+    65 translated messages, 3 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 82d65c3bff2407e1a1eeb44d8bd5b450a6d2ce78
+Author: heskjestad <cato@heskjestad.xyz>
+Date:   Fri Jul 23 12:50:39 2021 +0200
+
+    I18n: Update translation nb (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 9d729aa08a9f65531fc7db979efb7487bb1d8e57
+Author: Hugo Carvalho <hugokarvalho@hotmail.com>
+Date:   Fri Jul 23 00:48:22 2021 +0200
+
+    I18n: Update translation pt (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 246e57ce88bb3ee13e7d9cdf0fb80ee7b5fe1f97
+Author: 玉堂白鹤 <yjwork@qq.com>
+Date:   Thu Jul 22 12:50:08 2021 +0200
+
+    I18n: Update translation zh_CN (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 3524e8e2543f49e4082fce1fa18a11cb7dfd9aa6
+Author: UTUMI Hirosi <utuhiro78@yahoo.co.jp>
+Date:   Thu Jul 22 12:50:08 2021 +0200
+
+    I18n: Update translation ja (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 9348d22bc1602814a2ab06e622c69d706d980bfc
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Thu Jul 22 12:50:07 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 80010fd0f8b67f014872596e662de633d6cb1b2a
+Author: Anonymous <noreply@xfce.org>
+Date:   Thu Jul 22 00:48:39 2021 +0200
+
+    I18n: Update translation eu (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit fa6806637f9688b45d9a2610175d1e476393a904
+Author: Besnik Bleta <besnik@programeshqip.org>
+Date:   Wed Jul 21 00:48:34 2021 +0200
+
+    I18n: Update translation sq (97%).
+    
+    66 translated messages, 2 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0f06458b6c1e835409d281a8aab8ff86500e3573
+Author: Pjotr <pjotrvertaalt@gmail.com>
+Date:   Wed Jul 21 00:48:34 2021 +0200
+
+    I18n: Update translation nl (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1ab722dd1268106662ebdd6252956fb90f84d93d
+Author: Daniel Muñiz Fontoira <dani@damufo.eu>
+Date:   Wed Jul 21 00:48:34 2021 +0200
+
+    I18n: Update translation gl (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7383be38801106f025f18fb830319fd9b5caae27
+Author: jc1 <jc1.quebecos@gmail.com>
+Date:   Wed Jul 21 00:48:34 2021 +0200
+
+    I18n: Update translation fr (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit d248a32cca28437dba504a0e299810c02af0b355
+Author: Vangelis  Katsikaros <vkatsikaros@gmail.com>
+Date:   Mon Jul 19 19:44:09 2021 +0000
+
+    xfconf-query: Improve help string for 'verbose'
+
+commit 24900e54376c140717e858f73b835b07aa9c829a
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Mon May 24 00:49:19 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 376eb2e93465c6a4bdf12a11e80e9d1cd4b2f30b
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat May 1 12:51:47 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 6c134d0af94f10b4be496ecab256cb91c2a42aff
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sun Apr 25 01:19:35 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit dd2aa0e8eebb95704afa0e95542215cb468cc573
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat Apr 24 13:23:03 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit ddac95fc369fc3fc46210be69ec318df67bd57d3
+Author: Panwar108 <caspian7pena@gmail.com>
+Date:   Sat Apr 24 01:18:20 2021 +0200
+
+    I18n: Add new translation hi (52%).
+    
+    36 translated messages, 32 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit f17dcaf7f3cdcd0b1068c986f4b08ea348e58bea
+Author: Arnold Marko <arnold.marko@gmail.com>
+Date:   Thu Apr 22 10:49:47 2021 +0200
+
+    I18n: Update translation sl (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 8fa974ae8456203d145db896905418282520311e
+Author: heskjestad <cato@heskjestad.xyz>
+Date:   Thu Apr 22 10:49:46 2021 +0200
+
+    I18n: Update translation nb (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 51ef2d0e3d0ee3cbc532cebc07ef34140f4f3ea3
+Author: Anonymous <noreply@xfce.org>
+Date:   Wed Apr 21 00:49:18 2021 +0200
+
+    I18n: Update translation bg (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit abf4ef01effc8ea789aa45bcff12f14572906333
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat Apr 3 12:50:10 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 8fc4976be637481b8340b81717b36cca946a310e
+Author: Omer I.S <omeritzicschwartz@gmail.com>
+Date:   Fri Mar 5 12:53:53 2021 +0100
+
+    I18n: Update translation he (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 29a1c0163ea3c78a722cc78fc62cc286c13b6755
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Feb 6 00:48:09 2021 +0100
+
+    I18n: Update translation kab (57%).
+    
+    39 translated messages, 29 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit dff1ac8406eea144f4ae958114e81e0b0ad5ddc1
+Merge: 195eb2e 9e0703f
+Author: Ali Abdallah <ali.abdallah@suse.com>
+Date:   Mon Feb 1 13:20:45 2021 +0100
+
+    Merge branch 'skunnyk/xfconf-revamp_doc'
+
+commit 9e0703fdea5fdb1ca79128ec6b87fff161b1cb8c
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Sat Jan 30 20:06:07 2021 +0100
+
+    Revamp the documentation to modernize and uniformize accross components
+    
+    - Also fixes some autohells deprecations
+
+commit 195eb2e6482053c2f41d4f0f9cd1809f42469f76
+Author: Emin Tufan Çetin <etcetin@gmail.com>
+Date:   Tue Jan 19 10:51:31 2021 +0100
+
+    I18n: Update translation tr (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit b512da310526670abe82dc21eb9e303e71917ca9
+Author: Omer I.S <omeritzicschwartz@gmail.com>
+Date:   Tue Jan 19 10:51:28 2021 +0100
+
+    I18n: Update translation he (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit e2a2767353f372c5b7e1e1ca06aeaac57321086a
+Author: Steve Harris <steve@jbs.ca>
+Date:   Tue Jan 19 10:51:28 2021 +0100
+
+    I18n: Update translation en_CA (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit d5b3a663897eb6f7135e0e6ba80459caccb1efbb
+Author: Źmicier Turok <nashtlumach@gmail.com>
+Date:   Tue Jan 19 10:51:27 2021 +0100
+
+    I18n: Update translation be (100%).
+    
+    68 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit ab6ae23de27b5691ffacf528f6568827240abe4b
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Jan 16 00:49:54 2021 +0100
+
+    I18n: Update translation kab (52%).
+    
+    36 translated messages, 32 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit df8b44f3d575b2f344fefa7084af4c80bfb7a3d5
+Author: Anonymous <noreply@xfce.org>
+Date:   Sat Jan 9 00:48:43 2021 +0100
+
+    I18n: Add new translation kab (51%).
+    
+    35 translated messages, 33 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 760f8d3917250ae21926c285971818e3592d7976
+Merge: a95b1bf a5af4f2
+Author: Ali Abdallah <ali.abdallah@suse.com>
+Date:   Fri Jan 8 08:45:25 2021 +0100
+
+    Merge branch 'olh/xfconf-C99'
+
+commit a5af4f29a3f6765ae1ff454952244c6f36c5e854
+Author: Olaf Hering <olaf@aepfle.de>
+Date:   Thu Jan 7 07:07:07 2021 +0000
+
+    configure.ac: use AC_PROG_CC_C99
+    
+    Various parts of Xfce, and libraries used by Xfce, already use C99 features.
+    Therefore it is reasonable to expect the availibility of a capable compiler.
+    Current GCC releases silently default to newer C standards, starting with
+    gcc-5 which defaults to C11.
+    
+    Replace AC_PROG_CC with AC_PROG_CC_C99 to switch the discovered, or specified,
+    compiler to C99.
+    
+    Signed-off-by: Olaf Hering <olaf@aepfle.de>
+
+commit a95b1bf468323713540c334ff83fffc2ae8d9a11
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Tue Dec 22 23:58:14 2020 +0100
+
+    Back to development
+
 commit f05f028b840b465a41deef0fae6f50a885222e62
 Author: Romain Bouvier <skunnyk@alteroot.org>
 Date:   Tue Dec 22 21:33:42 2020 +0100

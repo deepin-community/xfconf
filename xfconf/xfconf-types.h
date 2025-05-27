@@ -21,14 +21,14 @@
 #ifndef __XFCONF_TYPES_H__
 #define __XFCONF_TYPES_H__
 
-#if !defined(LIBXFCONF_COMPILATION) && !defined(XFCONF_IN_XFCONF_H)
+#if !defined(LIBXFCONF_COMPILATION) && !defined(__XFCONF_IN_XFCONF_H__)
 #error "Do not include xfconf-types.h, as this file may change or disappear in the future.  Include <xfconf/xfconf.h> instead."
 #endif
 
 #include <glib-object.h>
 
-#define XFCONF_TYPE_UINT16  (xfconf_uint16_get_type())
-#define XFCONF_TYPE_INT16   (xfconf_int16_get_type())
+#define XFCONF_TYPE_UINT16 (xfconf_uint16_get_type())
+#define XFCONF_TYPE_INT16 (xfconf_int16_get_type())
 
 G_BEGIN_DECLS
 

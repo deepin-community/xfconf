@@ -1,0 +1,2 @@
+debian/55xfconf	/etc/X11/Xsession.d/
+usr/lib/*/gio/modules/libxfconfgsettingsbackend.so

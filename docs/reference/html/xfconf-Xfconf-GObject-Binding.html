@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Xfconf-GObject Binding: Xfconf Reference Manual</title>
+<title>Xfconf-GObject Binding: xfconf Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
-<link rel="home" href="index.html" title="Xfconf Reference Manual">
+<link rel="home" href="index.html" title="xfconf Reference Manual">
 <link rel="up" href="ch03.html" title="Xfconf Client Library">
 <link rel="prev" href="xfconf-Xfconf-Channel.html" title="Xfconf Channel">
 <link rel="next" href="ch04.html" title="API Index">
-<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.34.0 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -41,7 +41,7 @@
 <tbody>
 <tr>
 <td class="function_type">
-<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<span class="returnvalue">gulong</span>
 </td>
 <td class="function_name">
 <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()">xfconf_g_property_bind</a> <span class="c_punctuation">()</span>
@@ -49,7 +49,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<span class="returnvalue">gulong</span>
 </td>
 <td class="function_name">
 <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind-gdkcolor" title="xfconf_g_property_bind_gdkcolor ()">xfconf_g_property_bind_gdkcolor</a> <span class="c_punctuation">()</span>
@@ -57,7 +57,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<span class="returnvalue">gulong</span>
 </td>
 <td class="function_name">
 <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind-gdkrgba" title="xfconf_g_property_bind_gdkrgba ()">xfconf_g_property_bind_gdkrgba</a> <span class="c_punctuation">()</span>
@@ -105,15 +105,17 @@ all this.</p>
 <a name="xfconf-Xfconf-GObject-Binding.functions_details"></a><h2>Functions</h2>
 <div class="refsect2">
 <a name="xfconf-g-property-bind"></a><h3>xfconf_g_property_bind ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<pre class="programlisting"><span class="returnvalue">gulong</span>
 xfconf_g_property_bind (<em class="parameter"><code><a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a> *channel</code></em>,
-                        <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *xfconf_property</code></em>,
-                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> xfconf_property_type</code></em>,
-                        <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>,
-                        <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_property</code></em>);</pre>
-<p>Binds an Xfconf property to a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> property.  If the property
-is changed via either the <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> or Xfconf, the corresponding
-property will also be updated.</p>
+                        <em class="parameter"><code>const <span class="type">gchar</span> *xfconf_property</code></em>,
+                        <em class="parameter"><code><span class="type">GType</span> xfconf_property_type</code></em>,
+                        <em class="parameter"><code><span class="type">gpointer</span> object</code></em>,
+                        <em class="parameter"><code>const <span class="type">gchar</span> *object_property</code></em>);</pre>
+<p>Binds an Xfconf property to a <span class="type">GObject</span> property.  If the property
+is changed via either the <span class="type">GObject</span> or Xfconf, the corresponding
+property will also be updated. The binding is initialized from the
+Xfconf property, i.e. the initial value of the <span class="type">GObject</span> property is
+overwritten.</p>
 <p>Note that <em class="parameter"><code>xfconf_property_type</code></em>
  is required since <em class="parameter"><code>xfconf_property</code></em>
 
@@ -121,6 +123,9 @@ may or may not already exist in the Xfconf store.  The type of
 <em class="parameter"><code>object_property</code></em>
  will be determined automatically.  If the two
 types do not match, a conversion will be attempted.</p>
+<p>If you are binding a <span class="type">GdkColor</span> or <span class="type">GdkRGBA</span> property, pass <span class="type">G_TYPE_PTR_ARRAY</span>
+for <em class="parameter"><code>xfconf_property_type</code></em>
+.</p>
 <div class="refsect3">
 <a name="xfconf-g-property-bind.parameters"></a><h4>Parameters</h4>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
@@ -132,8 +137,8 @@ types do not match, a conversion will be attempted.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>channel</p></td>
-<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>xfconf_property</p></td>
@@ -149,8 +154,8 @@ types do not match, a conversion will be attempted.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>A <span class="type">GObject</span>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>object_property</p></td>
@@ -170,15 +175,22 @@ binding.</p>
 <hr>
 <div class="refsect2">
 <a name="xfconf-g-property-bind-gdkcolor"></a><h3>xfconf_g_property_bind_gdkcolor ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<pre class="programlisting"><span class="returnvalue">gulong</span>
 xfconf_g_property_bind_gdkcolor (<em class="parameter"><code><a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a> *channel</code></em>,
-                                 <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *xfconf_property</code></em>,
-                                 <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>,
-                                 <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_property</code></em>);</pre>
-<p>Binds an Xfconf property to a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> property of type
-GDK_TYPE_COLOR (aka a <a href="/usr/share/gtk-doc/html/gdk3/gdk3-Colors.html#GdkColor"><span class="type">GdkColor</span></a> struct).  If the property
-is changed via either the <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> or Xfconf, the corresponding
-property will also be updated.</p>
+                                 <em class="parameter"><code>const <span class="type">gchar</span> *xfconf_property</code></em>,
+                                 <em class="parameter"><code><span class="type">gpointer</span> object</code></em>,
+                                 <em class="parameter"><code>const <span class="type">gchar</span> *object_property</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">xfconf_g_property_bind_gdkcolor</code> has been deprecated since version 4.19.3 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()"><code class="function">xfconf_g_property_bind()</code></a> with <span class="type">G_TYPE_PTR_ARRAY</span>
+instead.</p>
+</div>
+<p>Binds an Xfconf property to a <span class="type">GObject</span> property of type
+GDK_TYPE_COLOR (aka a <span class="type">GdkColor</span> struct).  If the property
+is changed via either the <span class="type">GObject</span> or Xfconf, the corresponding
+property will also be updated. The binding is initialized from the
+Xfconf property, i.e. the initial value of the <span class="type">GObject</span> property is
+overwritten.</p>
 <p>This is a special-case binding; the GdkColor struct is not
 ideal as-is for binding to a property, so it is stored in the
 Xfconf store as four 16-bit unsigned ints (red, green, blue, alpha).
@@ -195,8 +207,8 @@ the last value will always be set to 0xFFFF.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>channel</p></td>
-<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>xfconf_property</p></td>
@@ -206,8 +218,8 @@ the last value will always be set to 0xFFFF.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>A <span class="type">GObject</span>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>object_property</p></td>
@@ -227,15 +239,22 @@ binding.</p>
 <hr>
 <div class="refsect2">
 <a name="xfconf-g-property-bind-gdkrgba"></a><h3>xfconf_g_property_bind_gdkrgba ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="returnvalue">gulong</span></a>
+<pre class="programlisting"><span class="returnvalue">gulong</span>
 xfconf_g_property_bind_gdkrgba (<em class="parameter"><code><a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a> *channel</code></em>,
-                                <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *xfconf_property</code></em>,
-                                <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>,
-                                <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_property</code></em>);</pre>
-<p>Binds an Xfconf property to a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> property of type
-GDK_TYPE_RGBA (aka a <a href="/usr/share/gtk-doc/html/gdk3/gdk3-RGBA-Colors.html#GdkRGBA"><span class="type">GdkRGBA</span></a> struct).  If the property
-is changed via either the <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> or Xfconf, the corresponding
-property will also be updated.</p>
+                                <em class="parameter"><code>const <span class="type">gchar</span> *xfconf_property</code></em>,
+                                <em class="parameter"><code><span class="type">gpointer</span> object</code></em>,
+                                <em class="parameter"><code>const <span class="type">gchar</span> *object_property</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">xfconf_g_property_bind_gdkrgba</code> has been deprecated since version 4.19.3 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()"><code class="function">xfconf_g_property_bind()</code></a> with <span class="type">G_TYPE_PTR_ARRAY</span>
+instead.</p>
+</div>
+<p>Binds an Xfconf property to a <span class="type">GObject</span> property of type
+GDK_TYPE_RGBA (aka a <span class="type">GdkRGBA</span> struct).  If the property
+is changed via either the <span class="type">GObject</span> or Xfconf, the corresponding
+property will also be updated. The binding is initialized from the
+Xfconf property, i.e. the initial value of the <span class="type">GObject</span> property is
+overwritten.</p>
 <p>This is a special-case binding; the GdkRGBA struct is not
 ideal as-is for binding to a property, so it is stored in the
 Xfconf store as four 16-bit unsigned ints (red, green, blue, alpha).</p>
@@ -250,8 +269,8 @@ Xfconf store as four 16-bit unsigned ints (red, green, blue, alpha).</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>channel</p></td>
-<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>xfconf_property</p></td>
@@ -261,8 +280,8 @@ Xfconf store as four 16-bit unsigned ints (red, green, blue, alpha).</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>A <span class="type">GObject</span>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>object_property</p></td>
@@ -284,7 +303,7 @@ binding.</p>
 <div class="refsect2">
 <a name="xfconf-g-property-unbind"></a><h3>xfconf_g_property_unbind ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-xfconf_g_property_unbind (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gulong"><span class="type">gulong</span></a> id</code></em>);</pre>
+xfconf_g_property_unbind (<em class="parameter"><code><span class="type">gulong</span> id</code></em>);</pre>
 <p>Removes an Xfconf/GObject property binding based on the binding
 ID number.  See <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()"><code class="function">xfconf_g_property_bind()</code></a>.</p>
 <div class="refsect3">
@@ -308,10 +327,10 @@ ID number.  See <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-
 <a name="xfconf-g-property-unbind-by-property"></a><h3>xfconf_g_property_unbind_by_property ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 xfconf_g_property_unbind_by_property (<em class="parameter"><code><a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a> *channel</code></em>,
-                                      <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *xfconf_property</code></em>,
-                                      <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>,
-                                      <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_property</code></em>);</pre>
-<p>Causes an Xfconf channel previously bound to a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> property
+                                      <em class="parameter"><code>const <span class="type">gchar</span> *xfconf_property</code></em>,
+                                      <em class="parameter"><code><span class="type">gpointer</span> object</code></em>,
+                                      <em class="parameter"><code>const <span class="type">gchar</span> *object_property</code></em>);</pre>
+<p>Causes an Xfconf channel previously bound to a <span class="type">GObject</span> property
 (see <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()"><code class="function">xfconf_g_property_bind()</code></a>) to no longer be bound.</p>
 <div class="refsect3">
 <a name="xfconf-g-property-unbind-by-property.parameters"></a><h4>Parameters</h4>
@@ -324,8 +343,8 @@ xfconf_g_property_unbind_by_property (<em class="parameter"><code><a class="link
 <tbody>
 <tr>
 <td class="parameter_name"><p>channel</p></td>
-<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>An <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>xfconf_property</p></td>
@@ -335,8 +354,8 @@ xfconf_g_property_unbind_by_property (<em class="parameter"><code><a class="link
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>A <span class="type">GObject</span>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>object_property</p></td>
@@ -352,13 +371,13 @@ xfconf_g_property_unbind_by_property (<em class="parameter"><code><a class="link
 <div class="refsect2">
 <a name="xfconf-g-property-unbind-all"></a><h3>xfconf_g_property_unbind_all ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-xfconf_g_property_unbind_all (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> channel_or_object</code></em>);</pre>
+xfconf_g_property_unbind_all (<em class="parameter"><code><span class="type">gpointer</span> channel_or_object</code></em>);</pre>
 <p>Unbinds all Xfconf channel bindings (see <a class="link" href="xfconf-Xfconf-GObject-Binding.html#xfconf-g-property-bind" title="xfconf_g_property_bind ()"><code class="function">xfconf_g_property_bind()</code></a>)
 to <em class="parameter"><code>object</code></em>
 .  If <em class="parameter"><code>object</code></em>
  is an <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>, it will unbind all
 xfconf properties on that channel.  If <em class="parameter"><code>object</code></em>
- is a regular <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a>
+ is a regular <span class="type">GObject</span>
 with properties bound to a channel, all those bindings will be
 removed.</p>
 <div class="refsect3">
@@ -371,8 +390,8 @@ removed.</p>
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>channel_or_object</p></td>
-<td class="parameter_description"><p>A <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject-struct"><span class="type">GObject</span></a> or <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p>A <span class="type">GObject</span> or <a class="link" href="xfconf-Xfconf-Channel.html#XfconfChannel"><span class="type">XfconfChannel</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL must not be passed as the value in, out, in-out; or as a return value."><span class="acronym">not nullable</span></acronym>]</span></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -380,6 +399,6 @@ removed.</p>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.33.1</div>
+<hr>Generated by GTK-Doc V1.34.0</div>
 </body>
 </html>
