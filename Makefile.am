@@ -27,15 +27,10 @@ ChangeLog: Makefile
 dist-hook: ChangeLog
 
 EXTRA_DIST = \
-	AUTHORS \
-	COPYING \
-	ChangeLog \
-	NEWS \
-	README.md \
 	m4/introspection.m4 \
 	m4/vapigen.m4
 
-DISTCHECK_CONFIGURE_FLAGS = \
+AM_DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
 	--enable-introspection \
 	--disable-vala

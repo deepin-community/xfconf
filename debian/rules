@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-export DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed -Wl,-O1 -Wl,-z,defs
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1 -Wl,-z,defs
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 
 %:
@@ -8,18 +8,19 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
-		--disable-gsettings-backend \
 		--disable-perl-bindings \
 		--enable-gtk-doc \
-		--enable-introspection=yes
+		--enable-gsettings-backend=yes \
+		--enable-introspection=yes \
+		--enable-vala=no
 
 override_dh_auto_test:
 
-override_dh_install:
-	dh_install -X .la
+execute_after_dh_auto_install:
+	find debian -name '*.la' -delete
 
-override_dh_missing:
-	dh_missing --fail-missing -X .la
+override_dh_installchangelogs:
+	DEB_BUILD_OPTIONS=notrimdch dh_installchangelogs NEWS
 
 override_dh_shlibdeps:
 	dh_shlibdeps -p xfconf -X debian/xfconf/usr/bin/xfconf-query -- \

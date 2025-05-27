@@ -21,7 +21,7 @@
 #ifndef __XFCONF_BINDING_H__
 #define __XFCONF_BINDING_H__
 
-#if !defined(LIBXFCONF_COMPILATION) && !defined(XFCONF_IN_XFCONF_H)
+#if !defined(LIBXFCONF_COMPILATION) && !defined(__XFCONF_IN_XFCONF_H__)
 #error "Do not include xfconf-binding.h, as this file may change or disappear in the future.  Include <xfconf/xfconf.h> instead."
 #endif
 
@@ -36,11 +36,13 @@ gulong xfconf_g_property_bind(XfconfChannel *channel,
                               gpointer object,
                               const gchar *object_property);
 
+G_GNUC_DEPRECATED_FOR(xfconf_g_property_bind)
 gulong xfconf_g_property_bind_gdkcolor(XfconfChannel *channel,
                                        const gchar *xfconf_property,
                                        gpointer object,
                                        const gchar *object_property);
 
+G_GNUC_DEPRECATED_FOR(xfconf_g_property_bind)
 gulong xfconf_g_property_bind_gdkrgba(XfconfChannel *channel,
                                       const gchar *xfconf_property,
                                       gpointer object,
@@ -57,4 +59,4 @@ void xfconf_g_property_unbind_all(gpointer channel_or_object);
 
 G_END_DECLS
 
-#endif  /* __XFCONF_BINDING_H__ */
+#endif /* __XFCONF_BINDING_H__ */
